@@ -985,10 +985,10 @@ class Device(_objfinalizer.AutoFinalizedObject):
 
         intf, ep = self._ctx.setup_request(self, endpoint)
         fn = fn_map[util.endpoint_type(ep.bmAttributes)]
-#        print (fn)
-                
+# Original code create ugly binary in the stream. 
+#        print (fn)              
 #        tmp_array = _interop.as_array(data)
-#	NOTWORKING , interop use data as 'B', we need 'i'
+# So I used basic bytes to bytes to convert.
                 
         i_data = [0]*len(data)
         for i in range(0,len(data)):
@@ -1002,13 +1002,14 @@ class Device(_objfinalizer.AutoFinalizedObject):
         	b_array[i-1] = tmp_array[i]
         
         b_data = array.array('B',b_array)
+# End of the conversion code
 
         return fn(
                 self._ctx.handle,
                 ep.bEndpointAddress,
                 intf.bInterfaceNumber,
-                b_data,
-                #_interop.as_array(data),
+                b_data,                     # return the new array
+                #_interop.as_array(data),   # remark old return
                 self.__get_timeout(timeout)
             )
 
