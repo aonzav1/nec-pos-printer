@@ -30,3 +30,15 @@ NEC Printers didn't communicate with the host using ESC/POS and I found that the
 
 416 bits (== dots) per lines. and staight forward.
 
+Headers for print are,
+
+[ 0x1b 0x63 0x30 0x02 0x1a 0x2e 0x30 0xa0 0x01 A B ]
+
+A, B  is lengh
+for example
+  A=0x1b , B=0x00
+  length = 001b = 27
+  lenght in bits   =   27 * 416 bits = 11232 bits
+  convert to bytes =   27 * 416 / 8 bytes = 1404 bytes
+  
+ 
