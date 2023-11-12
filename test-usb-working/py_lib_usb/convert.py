@@ -1,5 +1,33 @@
 from PIL import Image,ImageDraw,ImageFont
+from io import BytesIO
+import barcode 
+from barcode.writer import ImageWriter
 
+
+def write_barcode(bar_text,my_width=416,my_height=135) :
+#EAN13(str(), writer=ImageWriter()).write(rv)
+    ean13 = barcode.get("ean13",bar_text,writer=ImageWriter())
+    fp = BytesIO()
+    ean13.write(fp)
+    bt = fp.getvalue()
+    fp.seek(0)
+    img = Image.open(fp)
+
+    width,height = img.size
+    left = 45
+    top = 0
+    right = width -45
+    bottom = height -30
+
+    img_crop = img.crop((left,top,right,bottom))
+
+    newsize = (my_width,my_height)
+    img_final = img_crop.resize(newsize)
+
+    bit_im = img_final.convert("1")
+    list_of_pixels = list(bit_im.getdata())
+    
+    return list_of_pixels
 
 def show_image (list_of_pixels,width,height) :
     img2 = Image.new("1",size=[width,height])
