@@ -162,6 +162,12 @@ def PerformPrint(message):
     print ("DONE")
 
 
+######################################################
+#
+#               PRINTER INITIATION
+#
+######################################################
+
 
 print("NEC Printer - Python Test" )
 if DEBUG : print("FINDING USB DEVICES")
